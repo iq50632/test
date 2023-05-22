@@ -1,4 +1,4 @@
-import{bX as a}from"./index-644d7000.js";const s=a("product",{state:()=>({currentProduct:{},shoppingCart:[],allProduct:[{id:1,trader:"xavier",img:"https://img4.momoshop.com.tw/goodsimg/0007/952/373/7952373_R.jpg?t=1596706716",name:"【新品販售】海鮮比薩",text:`餡料：\r
+import{bX as a}from"./index-b686b848.js";const s=a("product",{state:()=>({currentProduct:{},shoppingCart:[],allProduct:[{id:1,trader:"xavier",img:"https://img4.momoshop.com.tw/goodsimg/0007/952/373/7952373_R.jpg?t=1596706716",name:"【新品販售】海鮮比薩",text:`餡料：\r
 蝦仁、魷魚條、蟹味絲、莫札瑞拉起司、洋香菜葉、番茄紅醬\r
 產品介紹：\r
 上選美味鮮蝦、蟹味絲及飽滿豐富的魷魚，滿滿鮮美滋味的海鮮比薩，讚不絕口。`,price:300,evaluation:4.8,brand:"必勝客",stock:20,sold:280,size:"大,中,小",created_at:"2021-07-18 04:17:34",updated_at:"2021-07-18 04:17:34"},{id:2,trader:"momo",img:"https://img.ruten.com.tw/s0/000/44c/xxee22/4/ea/a7/22028829332135_572.jpg",name:"【銷量第一】韓國烏龜餅乾",text:`台灣合法註冊公司，並依法開立發票，安心有保障！\r
