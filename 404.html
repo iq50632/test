@@ -4,13 +4,21 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/x-icon" href="/test/dabe_blue.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>sessionStorage.redirect = location.href</script>
     <title>作品集</title>
     <script type="module" crossorigin src="/test/assets/index-b012bb6d.js"></script>
     <link rel="stylesheet" href="/test/assets/index-b6055705.css">
-    <script>sessionStorage.redirect = location.href</script>
   </head>
   <body>
+    <script>
+      (function(){
+        let redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect !== location.href) {
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
     <div id="app"></div>
-    
   </body>
 </html>
