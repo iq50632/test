@@ -90,7 +90,7 @@ const use = (element) => {
                 selectedNames.splice(i, 1);
             }
         }
-        console.log('selected', selectedNames);
+        // console.log('selected', selectedNames);
     });
 
     const resize = () => chart.resize()

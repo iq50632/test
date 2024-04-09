@@ -3,7 +3,7 @@
         <div class="float-menu">
             <!-- <a href="#work">個人資料</a> -->
             <!-- <a href="#work">自傳</a> -->
-            <v-list v-model:opened="open" color="main">
+            <v-list v-model="open" color="main">
                 <v-list-item prepend-icon="mdi-school" title="教育程度" href="#school"/>
                 <v-list-item prepend-icon="mdi-desktop-tower-monitor"  title="電腦專長" href="#expertise"/>
                 <v-list-item prepend-icon="mdi-briefcase" title="⼯作經驗" href="#work"/>
@@ -290,7 +290,8 @@ export default {
                 //     name: '英文打字',
                 //     list: [ '每分鐘 30 個字' ]
                 // }
-            ]
+            ],
+            open: true
         }
     },
     computed: {
@@ -300,7 +301,7 @@ export default {
     },
     methods: {
         getAssetsFile(id, img) {
-            return new URL('../assets/image/project/' + id + '/' + img + '.png', import.meta.url).href
+            return new URL('@/assets/image/project/' + id + '/' + img + '.png', import.meta.url).href
         }
     }
 }

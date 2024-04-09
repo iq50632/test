@@ -13,7 +13,6 @@ import { ref, onMounted } from 'vue'
 import useMapChart from '../components/map-chart.js'
 export default {
     setup() {
-        // console.log(this.$vuetify.theme.themes[theme].colors.main)
         const recaptchaScript = document.createElement('script')
         recaptchaScript.setAttribute('src', 'https://cdn.jsdelivr.net/npm/echarts@4.9.0/map/js/world.js')
         document.head.appendChild(recaptchaScript)

@@ -31,7 +31,7 @@ export default createVuetify({
                     brown: '#522A1D',
                     bronzing: '#bdad72',
                     accent: '#2B3B4B',
-                    grey: '#f5f2f0'
+                    grey: '#808080'
 
                 }
             },

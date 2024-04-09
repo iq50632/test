@@ -15,7 +15,7 @@
 		</div>
 	</v-app-bar>
     <v-navigation-drawer v-model="showSidebar" temporary>
-        <v-list v-model="router" nav active-color="main">
+        <v-list v-model="router" nav color="main">
             <v-list-item v-for="tab in tabs" :key="tab.name"
 				:to="{ name: tab.name }" :class="showDark">
 				{{tab.text}}

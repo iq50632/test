@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import _ from 'lodash'
 
 export const useProductStore = defineStore('product', {
     state: () => {
@@ -154,6 +155,16 @@ export const useProductStore = defineStore('product', {
 		set_product(value) {
 			this.currentProduct = value
 		},
+		edit_product(value) {
+            const id = _.findIndex(this.allProduct, ['id', value.id])
+            this.allProduct[id] = value
+		},
+		del_product(value) {
+            const id = _.findIndex(this.allProduct, ['id', value.id])
+			console.log( this.allProduct.length)
+			this.allProduct.splice(id, 1)
+			console.log( this.allProduct.length)
+		},
 		set_shoppingCart(value) {
 			let item = {
 				name: value.name,
@@ -163,22 +174,22 @@ export const useProductStore = defineStore('product', {
 					number: value.number
 				}]
 			}
-			if (this.shopping.length > 0) {
-				let name_pos = _.findIndex(this.shopping, ['name', value.name])
+			if (this.shoppingCart.length > 0) {
+				let name_pos = _.findIndex(this.shoppingCart, ['name', value.name])
 				if (name_pos != -1) {
-				let size_pos = _.findIndex(this.shopping[name_pos].size, ['size', value.size])
+				let size_pos = _.findIndex(this.shoppingCart[name_pos].size, ['size', value.size])
 				if (size_pos != -1) {
-					this.shopping[name_pos].size[size_pos].number += value.number
+					this.shoppingCart[name_pos].size[size_pos].number += value.number
 				} else {
-					this.shopping[name_pos].size.push(item.size[0])
+					this.shoppingCart[name_pos].size.push(item.size[0])
 				}
 				} else {
-				this.shopping.push(item)
+				this.shoppingCart.push(item)
 				}
 			} else {
-				this.shopping.push(item)
+				this.shoppingCart.push(item)
 			}
-			this.shopping = _.compact(this.shopping)
+			this.shoppingCart = _.compact(this.shoppingCart)
 		}
     }
 })

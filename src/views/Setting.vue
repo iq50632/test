@@ -34,12 +34,12 @@
             </v-btn>
         </v-col>
         <v-col cols="3" lg="2" xl="1">
-            <v-btn :color="isSidebar ? 'main' : ''" height="100" width="100" @click="setSidebar">
+            <v-btn :color="!isSidebar ? 'main' : ''" height="100" width="100" @click="setSidebar">
                 導航欄
             </v-btn>
         </v-col>
         <v-col cols="3" lg="2" xl="1">
-            <v-btn :color="!isSidebar ? 'main' : ''" height="100" width="100" @click="setSidebar">
+            <v-btn :color="isSidebar ? 'main' : ''" height="100" width="100" @click="setSidebar">
                 側邊攔
             </v-btn>
         </v-col>

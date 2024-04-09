@@ -7,33 +7,68 @@
             </div>
             <c-table class="w-100" :data="productStore.allProduct" :headers="headers" :loading="loading" :search="search">
                 <template #[`item.trader`]="{ item }">
-                    {{ item.props.title.trader }}
+                    {{ item.trader }}
                 </template>
                 <template #[`item.sold`]="{ item }">
-                    {{ item.props.title.sold.toLocaleString() }}
+                    {{ item.sold }}
                 </template>
                 <template #[`item.stock`]="{ item }">
-                    {{ item.props.title.stock.toLocaleString() }}
+                    {{ item.stock }}
                 </template>
                 <template #[`item.price`]="{ item }">
-                    $ {{ item.props.title.price.toLocaleString() }}
+                    $ {{ item.price }}
                 </template>
                 <template #[`item.sum`]="{ item }">
-                    $ {{ (item.props.title.sold * item.props.title.price).toLocaleString() }}
+                    $ {{ (item.price * item.sold).toLocaleString() }}
                 </template>
                 <template #[`item.action`]="{ item }">
-                    <v-icon @click="productModal = true" icon="mdi-application-outline"/>
-                    <v-icon @click="deleteModal = true" icon="mdi-delete"/>
+                    <div class="d-flex">
+                        <v-icon @click="openProductModal(item)" icon="mdi-application-outline"/>
+                        <v-icon @click="openDeleteModal(item)" icon="mdi-delete"/>
+                    </div>
                 </template>
             </c-table>
         </div>
-        <c-popup v-model="productModal" title="管理產品" width="500"
-			btn1="確定" color1="teal" @click1="defaultStore.setSnackbar('已修改')"
-			btn2="取消" color2="grey" @click2="defaultStore.setSnackbar('已取消修改')">
+        <c-popup v-model="productModal" title="管理產品" width="800"
+			btn1="確定" color1="teal" @click1="edit"
+			btn2="取消" color2="grey" @click2="cancelEdit">
+            <v-row>
+                <v-col cols="12" md="6" lg="5" xl="4" class="image-frame">
+                    <img :src="selectedProduct.img" alt="image">
+                </v-col>
+                <v-col cols="12" md="6" lg="7" xl="8">
+                    <h2 class="my-2">{{selectedProduct.name}}</h2>
+                    <div class="mt-4 d-flex align-center">
+                        <v-rating v-model="selectedProduct.evaluation" half-increments readonly color="orange" density="compact"/>
+                        <b class="ml-4 evaluation" v-text="selectedProduct.evaluation"/>
+                    </div>
+                    <div class="mt-5 mb-10">
+                            <b>銷量: {{selectedProduct.sold}}</b>
+                    </div>
+                    <div class="d-flex align-center border-price">
+                        <span>價格：</span>
+                        <div style="width: 120px">
+                            <v-text-field v-model="selectedProduct.price" hide-details required @keypress="isNumber" />
+                        </div>
+                    </div>
+                    <div class="d-flex align-center mb-3 mt-5">
+                        <div class="text-no-wrap">尺寸：</div>
+                        <div class="d-flex flex-fill flex-wrap ">
+                            <v-text-field v-model="selectedProduct.size" hint="請使用'',''分隔" required />
+                        </div>
+                    </div>
+                    <div class="d-flex align-center mb-3">
+                        <span>庫存：</span>
+                        <div style="width: 120px" class="mr-5">
+                            <v-text-field v-model="selectedProduct.stock" hide-details required @keypress="isNumber" />
+                        </div>
+                    </div>
+                </v-col>
+            </v-row>
         </c-popup>
         <c-popup v-model="deleteModal" title="刪除產品" width="500"
-			btn1="刪除" color1="red" @click1="defaultStore.setSnackbar('刪不到啦ㄎㄎ', 'red')"
-			btn2="取消" color2="grey" @click2="defaultStore.setSnackbar('已取消刪除')">
+			btn1="刪除" color1="red" @click1="del"
+			btn2="取消" color2="grey" @click2="cancelDel">
             <p class="text-center">是否確定刪除此筆產品？</p>
         </c-popup>
     </div>
@@ -47,7 +82,7 @@ import { useProductStore } from '@/stores/product'
 import { useDefaultStore } from '@/stores/default'
 
 import { ref, onMounted } from 'vue'
-import lodash from 'lodash'
+import _ from 'lodash'
 import usePieChart from '../components/pie-chart.js'
 import useBarChart from '../components/bar-chart.js'
 
@@ -67,7 +102,7 @@ export default {
                 }
             }
             for (const product of productStore.allProduct) {
-                const data = lodash.find(option.series.data, {'name': product.trader})
+                const data = _.find(option.series.data, {'name': product.trader})
                 if (data) {
                     data.value += product.sold * product.price
                 } else {
@@ -118,6 +153,46 @@ export default {
             loading: false,
             productModal: false,
             deleteModal: false,
+            selectedProduct: {},
+            size: []
+        }
+    },
+    methods: {
+        openProductModal(value) {
+            this.productModal = true
+            this.selectedProduct = value
+            this.size = value.size.split(',')
+        },
+        openDeleteModal(value) {
+            this.selectedProduct = value
+            this.deleteModal = true
+        },
+        isNumber(evt) { 
+            if (!['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(evt.key)) { 
+                evt.preventDefault()
+            }
+        },
+        edit() {
+            this.productStore.edit_product( this.selectedProduct)
+            this.selectedProduct = {}
+            this.productModal = false
+            this.defaultStore.setSnackbar('已修改')
+        },
+        cancelEdit() {
+            this.selectedProduct = {}
+            this.productModal = false
+            this.defaultStore.setSnackbar('已取消修改')
+        },
+        del() {
+            this.productStore.del_product(this.selectedProduct)
+            this.deleteModal = false
+            this.defaultStore.setSnackbar('已刪除', 'red')
+            this.selectedProduct = {}
+        },
+        cancelDel() {
+            this.selectedProduct = {}
+            this.deleteModal = false
+            this.defaultStore.setSnackbar('已取消刪除')
         }
     }
 }
@@ -127,5 +202,13 @@ export default {
 .chart {
     height: 500px;
     width: 50%;
+}
+
+.image-frame {
+    padding: 20px;
+    
+    img {
+        width: -webkit-fill-available;;
+    }
 }
 </style>

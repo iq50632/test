@@ -18,10 +18,10 @@ const router = createRouter({
             // meta: { requiresAuth: true }
         },
         {
-            path: '/HR-management',
-            name: 'HRManagement',
-            text: '人事管理',
-            component: () => import('./views/HRManagement.vue')
+            path: '/note',
+            name: 'Note',
+            text: '筆記',
+            component: () => import('./views/Note.vue')
             // meta: { requiresAuth: true }
         },
         {

@@ -79,8 +79,6 @@ export default {
             return import.meta.env.VITE_NAME
         },
         fill() {
-            console.log(this.$vuetify.theme.global.name)
-            console.log(this.$vuetify.theme.themes[this.$vuetify.theme.global.name == 'dark' ? 'dark' : 'light'].colors)
             return this.$vuetify.theme.themes[this.$vuetify.theme.global.name == 'dark' ? 'dark' : 'light'].colors.main
         }
     },

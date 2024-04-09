@@ -171,7 +171,7 @@ export default {
     }
 
     .content {
-        white-space: pre;
+        white-space: break-spaces;
     }
 }
 </style>
