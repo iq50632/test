@@ -3,7 +3,7 @@
         <div class="pt-10 d-flex justify-space-around">
             <div class="text-center">
                 <h2>記事本</h2>
-                <draggable v-model="showNote" group="showNote" :swap="true" :move="onMove" ghost-class="ghost" class="v-row v-row--no-gutters w-100">
+                <draggable v-model="showNote" group="showNote" :itemKey="showNote" :swap="true" :move="onMove" ghost-class="ghost" class="v-row v-row--no-gutters w-100">
                     <template #item="{ element }">
                         <div class="pa-5 v-col-md-4 v-col-12">
                             <v-card :key="element.title" class="text-center py-8 h-100" elevation="6" rounded="xl" variant="tonal" :color="colors[element.color]">

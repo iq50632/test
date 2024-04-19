@@ -2,7 +2,8 @@
 <template>
 <v-app>
 	<v-app-bar elevation="10" color="main" class="text-white" floating v-if="$route.name != 'login'">
-		<v-app-bar-nav-icon v-if="isSidebar" @click="showSidebar = !showSidebar"/>
+		<v-btn v-if="$route.name=='product'" variant="text" icon="mdi-arrow-left" @click="$router.push({name: 'shopping'})"/>
+		<v-app-bar-nav-icon v-else-if="isSidebar" @click="showSidebar = !showSidebar"/>
 		<img src="@/assets/image/dabe.png" alt="" style="height:50px" @click="$router.push({name: 'home'})">
 		<v-tabs v-model="router" v-if="!isSidebar" class="ml-5" :dark="showDark">
 			<v-tab v-for="tab in tabs" :key="tab.name" :to="{ name: tab.name }">
@@ -31,7 +32,7 @@
 			</transition>
 		</router-view>
 	</v-container>
-	<v-snackbar v-model="store.snackbar.show" :color="store.snackbar.color" location="top" variant="tonal" timeout="5000">
+	<v-snackbar v-model="store.snackbar.show" :color="store.snackbar.color" location="top" timeout="5000">
 		<strong v-text="store.snackbar.text"/>
 		<template v-slot:action="{ attrs }">
 			<v-btn :color="store.snackbar.color" icon="mdi-close" v-bind="attrs" @click="store.snackbar.show = false"/>
@@ -54,8 +55,8 @@ import { useDisplay } from 'vuetify'
 export default {
     setup() {
 		const store = useDefaultStore()
-		const { mdAndDown } = useDisplay()
-		return { store, mdAndDown }
+		const { mdAndDown, smAndUp } = useDisplay()
+		return { store, mdAndDown, smAndUp }
 	},
     data() {
         return {
@@ -73,11 +74,14 @@ export default {
 	created() {
 		const theme = window.sessionStorage.getItem('theme') || 'light'
 		const color = window.sessionStorage.getItem('color') || 'light-blue'
-		const isSidebar = window.sessionStorage.getItem('isSidebar') || 'false'
+		const isSidebar = window.sessionStorage.getItem('isSidebar') || false
+		
 		this.$vuetify.theme.global.name = theme
 		this.$vuetify.theme.themes.dark.colors.main = this.$vuetify.theme.themes.dark.colors[color]
 		this.$vuetify.theme.themes.light.colors.main = this.$vuetify.theme.themes.light.colors[color]
-		if (!isSidebar) {
+		if (isSidebar === 'true') {
+			this.store.setSidebar()
+		} else if (this.smAndUp) {
 			this.store.setSidebar()
 		}
 	},
@@ -139,6 +143,10 @@ export default {
 		grid-area: prepend;
 		margin-right: -20px;
 	}
+}
+
+.v-snackbar__wrapper {
+	top: 64px !important;
 }
 
 .v-container {

@@ -26,7 +26,7 @@
                         <div class="d-flex align-center mb-3 mt-5">
                             <div class="text-no-wrap">尺寸：</div>
                             <div class="d-flex flex-fill flex-wrap ">
-                                <v-item-group>
+                                <v-item-group v-model="selectedSize">
                                     <v-item v-for="i in size" :key="i.id" v-slot="{ isSelected, toggle }">
                                         <v-btn color="main" :variant="isSelected ? 'outlined' : 'tonal'" class="mb-2 mx-3" @click="toggle">{{i}}</v-btn>
                                     </v-item>
@@ -64,24 +64,28 @@
                     <div class="ma-4 ml-2 line">
                         <b>產品介紹：</b>
                     </div>
-                    <div class="ma-5 content">
-                        {{product.text}}
-                    </div>
+                    <div class="ma-5 content" v-html="product.text" />
                 </div>
             </v-card-text>
         </v-card>
     </div>
+    <shopping-cart />
 </div>
 </template>
 
 <script>
 import { useProductStore } from '@/stores/product'
+import shoppingCart from '../components/shopping-cart.vue'
+import _ from 'lodash'
 
 export default {
+    components: { shoppingCart },
     setup() {
 		const store = useProductStore()
         const product = store.currentProduct
+        console.log(product)
         const size = store.currentProduct.size.split(',')
+        console.log(size)
 
         return { store, product, size }
     },
@@ -94,7 +98,7 @@ export default {
                 account: 123,
                 evaluation: 4
             },
-            shopping: '' //this.$store.state.login.shopping
+            selectedSize: ''
         }
     },
     watch: {
@@ -115,13 +119,17 @@ export default {
             this.$refs.mySwiper.$swiper.slideNext()
         },
         addShopping() {
-            this.store.set_shoppingCart({
-                id: this.product.id,
-                img: this.product.img,
-                name: this.product.name,
-                size: this.product.size,
-                count: parseInt(this.count)
-            })
+            if (this.selectedSize === undefined) {
+                this.defaultStore.setSnackbar('尚未選擇選項')
+            } else {
+                this.store.set_shoppingCart({
+                    id: this.product.id,
+                    img: this.product.img,
+                    name: this.product.name,
+                    size: this.size[this.selectedSize],
+                    count: parseInt(this.count)
+                })
+            }
         },
         updateCount(mode) {
             if (this.count <= this.product.stock && this.count >= 1) {
@@ -171,7 +179,7 @@ export default {
     }
 
     .content {
-        white-space: break-spaces;
+        white-space: pre;
     }
 }
 </style>

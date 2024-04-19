@@ -13,12 +13,12 @@
                     </template>
                     <template v-if="chat.role == 'assistant'">
                         <div>
-                            <v-chip color="green darken-1"><span v-html="chat.content"></span></v-chip>
+                            <v-chip color="green darken-1"><span v-html="chat.content" /></v-chip>
                         </div>
                     </template>
                     <template v-if="chat.role == 'user'">
                         <div class="text-right">
-                            <v-chip color="main" class="text-left"><span v-html="chat.content"></span></v-chip>
+                            <v-chip color="main" class="text-left"><span v-html="chat.content" /></v-chip>
                         </div>
                     </template>
                     <template v-if="chat.role == 'image'">
@@ -85,7 +85,7 @@ export default {
 <style lang="scss" scoped>
 .chat {
     position: absolute;
-    top: 64px;
+    top: 0;
     height: calc( 100vh - 64px);
     width: 100%;
     left: 0;
@@ -186,5 +186,11 @@ export default {
     100% {
         transform: translate(15px, 0);
     }
+}
+</style>
+<style scoped>
+:deep .v-container {
+	height: 100vh !important;
+    overflow: hidden;
 }
 </style>

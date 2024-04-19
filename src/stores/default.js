@@ -8,7 +8,7 @@ export const useDefaultStore = defineStore('default', {
         snackbar: {
             show: false,
             text: '',
-            color: 'bronzing'
+            color: 'main'
         },
     }),
     actions: {
@@ -28,14 +28,14 @@ export const useDefaultStore = defineStore('default', {
             this.snackbar = {
                 show: true,
                 text: text,
-                color: color || 'bronzing' 
+                color: color || 'main' 
             }
         },
         closeSnackbar() {
             this.snackbar = {
                 show: false,
                 text: '',
-                color: 'bronzing'
+                color: 'main'
             }
         },
     },

@@ -4,53 +4,37 @@ import _ from 'lodash'
 export const useProductStore = defineStore('product', {
     state: () => {
         return { 
-			currentProduct: {},
 			shoppingCart: [],
 			allProduct: [
 				{
 					id: 1,
 					trader: 'xavier',
-					img: 'https://img4.momoshop.com.tw/goodsimg/0007/952/373/7952373_R.jpg?t=1596706716',
-					name: '【新品販售】海鮮比薩',
-					text: '餡料：\r\n' +
-						'蝦仁、魷魚條、蟹味絲、莫札瑞拉起司、洋香菜葉、番茄紅醬\r\n' +
-						'產品介紹：\r\n' +
-						'上選美味鮮蝦、蟹味絲及飽滿豐富的魷魚，滿滿鮮美滋味的海鮮比薩，讚不絕口。',
-					price: 300,
+					img: 'https://i2.momoshop.com.tw/1685769426/goodsimg/0011/072/533/11072533_R.webp',
+					name: '【YOMIX 優迷】PD15W快充充電Lightning直插口袋行動電源(4800mAh行充/電量顯示)',
+					category: 'electricity',
+					text: '</iframe><br><div style="text-align: center;"><strong>好評如潮 四色開箱實測給你看!</strong><br>米歐美麥&nbsp;<a href="https://aurameou.wixsite.com/miooooo/post/yomix" target="_blank">迷你行動電源開箱｜網美打卡旅行必備<br></a>SamNi,s Blog <a href="https://samni991222.pixnet.net/blog/post/232760587-%5b%e6%84%9b%e7%94%9f%e6%b4%bb%5d-yomix-%e5%84%aa%e8%bf%b7-%c2%b7-pd15w-%e5%bf%ab%e5%85%85%e5%85%85%e9%9b%bb-lightning-%e8%bf%b7" target="_blank">出國必備!拍照不再怕沒電!<br></a>Miyako <a href="https://miyakohsiao.pixnet.net/blog/post/121753907" target="_blank">免線即充 行動更自由!</a><br>貝ㄦ貪食怪&nbsp;&nbsp;<a href="https://melodysu911.pixnet.net/blog/post/88879231" target="_blank">智能電量顯示 隨時掌握電量</a><br><br></div><img src="https://img2.momoshop.com.tw/expertimg/0011/072/533/mobile/P1_01.jpg?t=1685701767156" alt="免線外出 迷你隨攜" width="100%" height="auto"><br><img src="https://img2.momoshop.com.tw/expertimg/0011/072/533/mobile/P1_02.jpg?t=1685701767156" alt="PD15W Lightning口袋行動電源,貼心的LED電" width="100%" height="auto"><br><img src="https://img2.momoshop.com.tw/expertimg/0011/072/533/mobile/P1_03.jpg?t=1685701767156" alt="提醒 18W為TypeC孔最大輸入功率,輸出最大功率為15W," width="100%" height="auto"><br><img src="https://img2.momoshop.com.tw/expertimg/0011/072/533/mobile/P2_04.jpg?t=1685701767156" alt="體積大  釋放雙手  才能充" width="100%" height="auto"><br><img src="https://img2.momoshop.com.tw/expertimg/0011/072/533/mobile/P2_05.jpg?t=1685701767156" alt="提醒圖片僅供示意,請以實際產品為主" width="100%" height="auto"><br><img src="https://img2.momoshop.com.tw/expertimg/0011/072/533/mobile/P2_06.jpg?t=1685701767156" alt="迷你身形,輕鬆放入口袋中," width="100%" height="auto"><br><img src="https://img2.momoshop.com.tw/expertimg/0011/072/533/mobile/P2_07GIF.gif?t=1685701767156" alt="Lightning頭最高支援15W," width="100%" height="auto"><br><img src="https://img2.momoshop.com.tw/expertimg/0011/072/533/mobile/P2_08.jpg?t=1685701767156" alt="提醒 1. 使用TYPEC孔為設備充電時,需搭配18W PD快充線,才可達到最佳效能。" width="100%" height="auto"><br><img src="https://img2.momoshop.com.tw/expertimg/0011/072/533/mobile/P2_09.jpg?t=1685701767156" alt="提醒 數值結果因設備不同而有所差異,僅供參考," width="100%" height="auto"><br><img src="//img2.momoshop.com.tw/expertimg/0011/072/533/mobile/P1_09.jpg?t=1685701767156" alt="提醒 數值結果因設備不同而有所差異,僅供參考," width="100%" height="auto"><br><img src="https://img2.momoshop.com.tw/expertimg/0011/072/533/mobile/P2_11.jpg?t=1685701767156" alt="提醒 1. 使用TypeC孔時,需搭配18W PD快充線,才可達到最佳效能。" width="100%" height="auto"><br><img src="https://img2.momoshop.com.tw/expertimg/0011/072/533/mobile/P2_12.jpg?t=1685701767156" alt="提醒 1. 當吃電較大時電池電壓下降會很快,導致行動電源自動執行低壓保護而" width="100%" height="auto"><br><img src="https://img2.momoshop.com.tw/expertimg/0011/072/533/mobile/P2_13.jpg?t=1685701767156" alt="提醒  使用TYPEC孔為行動電源" width="100%" height="auto"><br><img src="https://img2.momoshop.com.tw/expertimg/0011/072/533/mobile/P2_14.jpg?t=1685701767156" alt="內建多層安全防護機制,配置iCUP 控溫晶片" width="100%" height="auto"><br><img src="https://img2.momoshop.com.tw/expertimg/0011/072/533/mobile/P2_15.jpg?t=1685701767156" alt="提醒當設備電池容量大於產品本身時," width="100%" height="auto"><br><img src="https://img2.momoshop.com.tw/expertimg/0011/072/533/mobile/P2_16.jpg?t=1685701767156" alt="保險期間自民國111年06月01日 至民國 112年06月01日" width="100%" height="auto"><br><img src="//img2.momoshop.com.tw/expertimg/0011/072/533/mobile/P1_17.jpg?t=1685701767156" alt="PD15W快充充電Lightning" width="100%" height="auto"><img src="//img2.momoshop.com.tw/expertimg/0011/072/533/mobile/P1_18.jpg?t=1685701767156" alt="YOMIX行動電源系列 15W直插式口袋行充 20W直插式口袋行充 磁吸款 20W磁吸式行動電源 " width="100%" height="auto"><br><img src="https://img2.momoshop.com.tw/expertimg/0011/072/533/mobile/P2_19.jpg?t=1685701767156" alt="優質好物 迷人首選 最平實的價格,帶來最美好的數位生活 " width="100%" height="auto"><br><img src="https://img2.momoshop.com.tw/expertimg/0011/072/533/mobile/P2_20.jpg?t=1685701767156" alt="如因人為不當使用、破壞所造成之損害,恕無法" width="100%" height="auto"><br><br><br><br><br><br>',
+					price: 690,
 					evaluation: 4.8,
-					brand: '必勝客',
+					brand: 'YOMIX',
 					stock: 20,
 					sold: 280,
-					size: '大,中,小',
+					size: '神秘黑,牛奶白,暖粉色,風鈴紫',
 					created_at: '2021-07-18 04:17:34',
 					updated_at: '2021-07-18 04:17:34'
 				},
 				{
 					id: 2,
 					trader: 'momo',
-					img: 'https://img.ruten.com.tw/s0/000/44c/xxee22/4/ea/a7/22028829332135_572.jpg',
-					name: '【銷量第一】韓國烏龜餅乾',
-					text: '台灣合法註冊公司，並依法開立發票，安心有保障！\r\n' +
-						'\r\n' +
-						'?ORION好麗友餅乾?\r\n' +
-						'各種款式 任您挑選?\r\n' +
-						'款式超多樣 讓您選不完\r\n' +
-						'\r\n' +
-						'?規格\r\n' +
-						'\r\n' +
-						'▶小包-80g/包\r\n' +
-						'\r\n' +
-						'原味(玉米濃湯) / 麻辣口味 / 黃豆粉麻糬\r\n' +
-						'\r\n' +
-						'▶大包-160g/包\r\n' +
-						'\r\n' +
-						'原味 / 吉拿棒肉桂(⚠孕婦不可食用)',
+					img: 'https://i2.momoshop.com.tw/1685591851/goodsimg/0009/566/030/9566030_R.webp',
+					name: 'LANEIGE 蘭芝 睡美人極萃滋養晚安唇膜 20g',
+					category: 'makeup',
+					text: '<iframe width="100%" height="315" src="https://www.youtube.com/embed/a4tmyyt-QVc" frameborder="0" allow="encrypted-media" allowfullscreen=""></iframe><br><div style="float: left;"><div><p style="margin: 0px;"><a style="font-size: 10px;" href="https://www.momoshop.com.tw/edm/cmmedm.jsp?npn=1vEIC6qZW0mM&amp;n=1" target="_blank"><img style="color: #000000;" src="https://img3.momoshop.com.tw/expertimg/0009/566/030/mobile/0.jpg?t=1668480086192" alt="" width="100%" height="auto"></a></p></div><img src="https://img3.momoshop.com.tw/expertimg/0009/566/030/mobile/1.jpg?t=1668480086192" alt="" width="100%" height="auto"> <br><img src="https://img3.momoshop.com.tw/expertimg/0009/566/030/mobile/2.jpg?t=1668480086192" alt="" width="100%" height="auto"> <br><img src="https://img3.momoshop.com.tw/expertimg/0009/566/030/mobile/3.jpg?t=1668480086192" alt="" width="100%" height="auto"></div><br><br><br><br><br><br><br><img src="https://img3.momoshop.com.tw/expertimg/0009/566/030/mobile/BTS_cut_07.jpg?t=1668480086192" alt="" width="100%" height="auto">',
 					price: 48,
-					evaluation: 4.4,
-					brand: '1231',
+					evaluation: 4.9,
+					brand: 'LANEIGE',
 					stock: 200,
 					sold: 142,
-					size: '玉米濃湯,麻辣,烤麻糬',
+					size: '青檸,蜜柚,甜莓',
 					created_at: '2021-07-18 06:23:51',
 					updated_at: '2021-07-18 06:23:51'
 				},
@@ -59,6 +43,7 @@ export const useProductStore = defineStore('product', {
 					trader: 'xavier',
 					img: 'https://cf.shopee.tw/file/6959219e2fe27235f9f790bc5e94ca9c',
 					name: '【嘴甜甜】 巧克力脆笛酥',
+					category: 'food',
 					text: '?巧克力脆笛酥成分：砂糖、麵粉、氫化植物油、乳糖、脫脂奶粉、可可粉、乳清粉、大豆卵磷脂、焦糖色素、香草精粉、蛋、食用色素、轉化糖。\n' +
 						'?草莓脆笛酥成分： 麵粉、砂糖、棕櫚油、玉米澱粉、脫脂乳粉、果糖糖漿、乳糖、草莓果汁粉、大豆卵磷脂、精鹽、乳酸、香料、蛋、食用紅色四十號、消泡劑(矽樹脂、脂肪酸甘油酯、脂肪酸蔗糖酯、脂肪酸山梨醇酐酯、玉米油、玉米糖膠)。\n' +
 						'?產地：台灣。\n' +
@@ -71,7 +56,7 @@ export const useProductStore = defineStore('product', {
 					brand: '自有品牌',
 					stock: 420,
 					sold: 255,
-					size: '草莓,巧克力,?',
+					size: '草莓,巧克力',
 					created_at: '2021-07-19 11:05:56',
 					updated_at: '2021-07-19 11:05:56'
 				},
@@ -80,6 +65,7 @@ export const useProductStore = defineStore('product', {
 					trader: 'xavier',
 					img: 'https://cf.shopee.tw/file/1f4e9d2928aef9bc49b355fb53597e73',
 					name: '【正韓】抗菌乾洗手 / 香氛酒精',
+					category: 'life',
 					text: '?三大服務\n' +
 						'☛24H 出貨 ┃ 商品台灣出貨，預計三個工作天到達；若需確保商品當日出貨，可先透過聊聊與客服做確認\n' +
 						'☛詳細規格 ┃ 100%聊聊回覆、貼心客服專線、售後服務\n' +
@@ -118,6 +104,7 @@ export const useProductStore = defineStore('product', {
 					id: 5,
 					trader: 'xavier',
 					img: 'https://cf.shopee.tw/file/36a533db3081eada7d13c8aa55205055',
+					category: 'food',
 					name: '每日優果 酸V脆脆桃 口袋蜜餞',
 					text: '✔美味黃桃切丁製成，大小剛剛好\n' +
 						'✔迷人酸V，忍不住一口接一口~\n' +
@@ -167,29 +154,37 @@ export const useProductStore = defineStore('product', {
 		},
 		set_shoppingCart(value) {
 			let item = {
+				id: value.id,
 				name: value.name,
 				img: value.img,
 				size: [{
 					size: value.size,
-					number: value.number
+					count: value.count
 				}]
 			}
 			if (this.shoppingCart.length > 0) {
 				let name_pos = _.findIndex(this.shoppingCart, ['name', value.name])
 				if (name_pos != -1) {
-				let size_pos = _.findIndex(this.shoppingCart[name_pos].size, ['size', value.size])
-				if (size_pos != -1) {
-					this.shoppingCart[name_pos].size[size_pos].number += value.number
+					let size_pos = _.findIndex(this.shoppingCart[name_pos].size, ['size', value.size])
+					if (size_pos != -1) {
+						this.shoppingCart[name_pos].size[size_pos].count += value.count
+					} else {
+						this.shoppingCart[name_pos].size.push(item.size[0])
+					}
 				} else {
-					this.shoppingCart[name_pos].size.push(item.size[0])
-				}
-				} else {
-				this.shoppingCart.push(item)
+					this.shoppingCart.push(item)
 				}
 			} else {
 				this.shoppingCart.push(item)
 			}
-			this.shoppingCart = _.compact(this.shoppingCart)
+			this.shopping = _.compact(this.shopping)
+		},
+		del_shoppingCart(contentIndex, shapeIndex) {
+			if (this.shoppingCart[contentIndex].size.length > 1) {
+				this.shoppingCart[contentIndex].size.splice(shapeIndex, 1)
+			} else {
+				this.shoppingCart.splice(contentIndex, 1)
+			}
 		}
     }
 })

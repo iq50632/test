@@ -4,14 +4,14 @@
             <!-- <a href="#work">個人資料</a> -->
             <!-- <a href="#work">自傳</a> -->
             <v-list v-model="open" color="main">
-                <v-list-item prepend-icon="mdi-school" title="教育程度" href="#school"/>
-                <v-list-item prepend-icon="mdi-desktop-tower-monitor"  title="電腦專長" href="#expertise"/>
-                <v-list-item prepend-icon="mdi-briefcase" title="⼯作經驗" href="#work"/>
+                <v-list-item prepend-icon="mdi-school" title="教育程度" @click="scroll('#school')"/>
+                <v-list-item prepend-icon="mdi-desktop-tower-monitor"  title="電腦專長" @click="scroll('#expertise')"/>
+                <v-list-item prepend-icon="mdi-briefcase" title="⼯作經驗" @click="scroll('#work')"/>
                 <v-list-group value="project">
                     <template v-slot:activator="{ props }">
-                        <v-list-item v-bind="props" prepend-icon="mdi-folder-network" title="工作專案經歷" href="#project"/>
+                        <v-list-item v-bind="props" prepend-icon="mdi-folder-network" title="工作專案經歷"/>
                     </template>
-                    <v-list-item v-for="i in workList" :key="i.id" :title="i.title" :value="i.id" :href="`#project-${i.id}`"/>
+                    <v-list-item v-for="i in workList" :key="i.id" :title="i.title" :value="i.id" @click="scroll(`#project-${i.id}`)"/>
                 </v-list-group>
             </v-list>
         </div>
@@ -20,7 +20,7 @@
                 <div :class="isMD ? '' : 'd-flex justify-space-between'" id='school'>
                     <div>
                         <h2 class="pb-15">教育程度</h2>
-                        <v-timeline dot-color="main" size="small" side="end" :direction="isMD ? 'horizontal': 'vertical'">
+                        <v-timeline dot-color="main" size="small" side="end" :direction="isSM ? 'horizontal': 'vertical'">
                             <v-timeline-item v-for="item in school" :key="item.id">
                                 <strong class="me-4">{{item.date}}</strong>
                                 <div class="d-flex">
@@ -50,7 +50,7 @@
             </v-col>
             <v-col cols="12">
                 <div class="text-center my-10">
-                    <v-btn icon="mdi-chevron-down" href="#work" elevation="0" class="next" size="x-large"/>
+                    <v-btn icon="mdi-chevron-down" @click="scroll('#work')" elevation="0" class="next" size="x-large"/>
                 </div>
             </v-col>
         </v-row>
@@ -65,14 +65,14 @@
                             {{item.date}}
                         </template>
                         <div>
-                            <b class="text-h6 text-main font-weight-bold">{{item.office}}</b>
+                            <b class="text-h6 text-main font-weight-bold">{{item.name}} - {{item.office}}</b>
                             <p class="m-0 mt-4">{{item.description}}</p>
                         </div>
                     </v-timeline-item>
                 </v-timeline>
             </div>
             <div class="text-center my-10">
-                <v-btn icon="mdi-chevron-down" href="#project" elevation="0" class="next" size="x-large"/>
+                <v-btn icon="mdi-chevron-down" @click="scroll('#project')" elevation="0" class="next" size="x-large"/>
             </div>
         </div>
 
@@ -83,7 +83,7 @@
         </v-chip><br>
         <div v-for="(project, i) in data" :key="project.title" :id="`project-${project.id}`">
             <div class="text-center mt-10" v-if="i != 0 && i != data.length">
-                <v-btn icon="mdi-chevron-down" :href="`#project-${project.id}`" elevation="0" class="next" size="x-large"/>
+                <v-btn icon="mdi-chevron-down" @click="scroll(`#project-${project.id}`)" elevation="0" class="next" size="x-large"/>
             </div>
             <div class="h-100 d-flex align-center">
                 <div class="w-100 mt-5">
@@ -98,7 +98,7 @@
                     <div v-if="project.images" class="pt-5">
                         <v-carousel cycle height="500" show-arrows="hover">
                             <v-carousel-item v-for="img in project.images" :key="img">
-                                <v-img contain eager :src="`/assets/image/project/${project.id}/${img}.png`" :alt="`${project.title}-${img}`"/>
+                                <v-img contain eager :src="`src/assets/image/project/${project.id}/${img}.png`" :alt="`${project.title}-${img}`"/>
                             </v-carousel-item>
                         </v-carousel>
                     </div>
@@ -117,8 +117,8 @@ import { useDisplay } from 'vuetify'
 
 export default {
     setup() {
-		const { mdAndDown } = useDisplay()
-		return { isMD: mdAndDown }
+		const { mdAndDown, smAndDown } = useDisplay()
+		return { isMD: mdAndDown, isSM: smAndDown  }
 	},
     data() {
         return {
@@ -290,8 +290,7 @@ export default {
                 //     name: '英文打字',
                 //     list: [ '每分鐘 30 個字' ]
                 // }
-            ],
-            open: true
+            ]
         }
     },
     computed: {
@@ -300,8 +299,8 @@ export default {
         }
     },
     methods: {
-        getAssetsFile(id, img) {
-            return new URL('@/assets/image/project/' + id + '/' + img + '.png', import.meta.url).href
+        scroll(hash) {
+            document.querySelector(hash).scrollIntoView()
         }
     }
 }

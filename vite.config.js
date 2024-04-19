@@ -20,6 +20,16 @@ export default defineConfig({
       autoImport: true,
       styles: { configFile: './src/assets/main.scss' }
     }),
+    {
+      name: 'static-js',
+      apply: 'serve',
+      enforce: 'pre',
+      resolveId(source, importer) {
+        if (source.endsWith('_commonjsHelpers-042e6b4d.js')) {
+          return '\ufeff' + source
+        }
+      }
+    }
   ],
   resolve: {
     alias: {
