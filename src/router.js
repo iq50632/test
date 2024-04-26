@@ -31,18 +31,25 @@ const router = createRouter({
             component: () => import('./views/Shopping.vue')
             // meta: { requiresAuth: true }
         },
+        // {
+        //     path: '/chat',
+        //     name: 'chat',
+        //     text: '聊天AI',
+        //     component: () => import('./views/Chat.vue')
+        //     // meta: { requiresAuth: true }
+        // },
+        // {
+        //     path: '/map',
+        //     name: 'map',
+        //     text: '地圖',
+        //     component: () => import('./views/Map.vue')
+        //     // meta: { requiresAuth: true }
+        // },
         {
-            path: '/chat',
-            name: 'chat',
-            text: '聊天AI',
-            component: () => import('./views/Chat.vue')
-            // meta: { requiresAuth: true }
-        },
-        {
-            path: '/map',
-            name: 'map',
-            text: '地圖',
-            component: () => import('./views/Map.vue')
+            path: '/travel',
+            name: 'travel',
+            text: '旅遊',
+            component: () => import('./views/Travel.vue')
             // meta: { requiresAuth: true }
         },
         {

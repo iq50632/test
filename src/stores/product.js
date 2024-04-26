@@ -148,9 +148,7 @@ export const useProductStore = defineStore('product', {
 		},
 		del_product(value) {
             const id = _.findIndex(this.allProduct, ['id', value.id])
-			console.log( this.allProduct.length)
 			this.allProduct.splice(id, 1)
-			console.log( this.allProduct.length)
 		},
 		set_shoppingCart(value) {
 			let item = {

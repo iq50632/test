@@ -76,16 +76,13 @@
 <script>
 import { useProductStore } from '@/stores/product'
 import shoppingCart from '../components/shopping-cart.vue'
-import _ from 'lodash'
 
 export default {
     components: { shoppingCart },
     setup() {
 		const store = useProductStore()
         const product = store.currentProduct
-        console.log(product)
         const size = store.currentProduct.size.split(',')
-        console.log(size)
 
         return { store, product, size }
     },

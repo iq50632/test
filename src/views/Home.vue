@@ -98,7 +98,7 @@
                     <div v-if="project.images" class="pt-5">
                         <v-carousel cycle height="500" show-arrows="hover">
                             <v-carousel-item v-for="img in project.images" :key="img">
-                                <v-img contain eager :src="`src/assets/image/project/${project.id}/${img}.png`" :alt="`${project.title}-${img}`"/>
+                                <v-img contain eager :src="`assets/image/project/${project.id}/${img}.png`" :alt="`${project.title}-${img}`"/>
                             </v-carousel-item>
                         </v-carousel>
                     </div>
@@ -201,16 +201,22 @@ export default {
             ],
             work: [
                 {
+                    name: '巨跡資訊股份有限公司',
+                    date: '2021/01/25 - 2021/06/30',
+                    office: '助理⼯程師',
+                    description: '大學實習時協助並與後端工程師合作，使用Laravel、Vue、Angular、Bootstrap、Lodash等網頁技術撰寫前後端，讀取與匯入資料、串接後端API、測試與修正系統。'
+                },
+                {
                     name: '阜爾運通股份有限公司',
                     date: '2021/09/02 - 2023/04/30',
                     office: '⼯程師',
                     description: '與後端工程師協同合作，進行後台系統開發與維護。工作內容為UI / UX設計、使⽤Laravel、Vue、Lodash、Vuetify等網⾴技術撰寫前端、串接後端API、測試與修正系統。'
                 },
                 {
-                    name: '巨跡資訊股份有限公司',
-                    date: '2021/01/25 - 2021/06/30',
-                    office: '助理⼯程師',
-                    description: '大學實習時協助並與後端工程師合作，使用Laravel、Vue、Angular、Bootstrap、Lodash等網頁技術撰寫前後端，讀取與匯入資料、串接後端API、測試與修正系統。'
+                    name: '尤米爾科技有限公司',
+                    date: '2023/07/03 - 2021/12/31',
+                    office: '前端工程師',
+                    description: '工作內容：\n1. 以 Vue.js 開發前端畫面、互動效果與串接後端API\n2. 與PM、設計、後端、Mobile團隊協作開發\n3. 開發未來新功能以及維護舊有功能\n4. 協助排查問題\n5. 持續優化、重構與維護既有程式碼'
                 },
                 // {
                 //     name: '新北市政府-⼟地稅科',
@@ -321,4 +327,7 @@ export default {
     z-index: 1;
 }
 
+#work {
+    white-space: pre-wrap;
+}
 </style>

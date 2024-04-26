@@ -113,13 +113,13 @@ export default {
 		},
         tabs() {
             const list = [...this.$router.options.routes]
-            return list.slice(0, 6)
+            return list.slice(0, 5)
         }
 	}
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .v-toolbar {
 	transition: all 0.3s;
 	&-title {
