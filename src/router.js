@@ -15,21 +15,18 @@ const router = createRouter({
             name: 'shopDataTable',
             text: '產品數據表',
             component: () => import('./views/shopDataTable.vue')
-            // meta: { requiresAuth: true }
         },
         {
             path: '/note',
-            name: 'Note',
+            name: 'note',
             text: '筆記',
             component: () => import('./views/Note.vue')
-            // meta: { requiresAuth: true }
         },
         {
             path: '/shopping',
             name: 'shopping',
             text: '購物',
             component: () => import('./views/Shopping.vue')
-            // meta: { requiresAuth: true }
         },
         // {
         //     path: '/chat',
@@ -52,24 +49,17 @@ const router = createRouter({
             component: () => import('./views/Travel.vue')
             // meta: { requiresAuth: true }
         },
-        {
-            path: '/parking-seats',
-            name: 'parkingSeats',
-            text: '停車場選擇',
-            component: () => import('./views/ParkingSeats.vue')
-            // meta: { requiresAuth: true }
-        },
+        // {
+        //     path: '/parking-seats',
+        //     name: 'parkingSeats',
+        //     text: '停車場選擇',
+        //     component: () => import('./views/ParkingSeats.vue')
+        //     // meta: { requiresAuth: true }
+        // },
         {
             path: "/product",
             name: "product",
             component: () => import('./views/Product.vue')
-        },
-        {
-            path: '/setting',
-            name: 'setting',
-            text: '設定',
-            component: () => import('./views/Setting.vue')
-            // meta: { requiresAuth: true }
         },
         {
             path: '/login',

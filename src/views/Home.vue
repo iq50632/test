@@ -1,43 +1,53 @@
 <template>
-    <div class="pr-15">
-        <div class="float-menu">
-            <!-- <a href="#work">個人資料</a> -->
-            <!-- <a href="#work">自傳</a> -->
-            <v-list v-model="open" color="main">
-                <v-list-item prepend-icon="mdi-school" title="教育程度" @click="scroll('#school')"/>
-                <v-list-item prepend-icon="mdi-desktop-tower-monitor"  title="電腦專長" @click="scroll('#expertise')"/>
-                <v-list-item prepend-icon="mdi-briefcase" title="⼯作經驗" @click="scroll('#work')"/>
-                <v-list-group value="project">
-                    <template v-slot:activator="{ props }">
-                        <v-list-item v-bind="props" prepend-icon="mdi-folder-network" title="工作專案經歷"/>
-                    </template>
-                    <v-list-item v-for="i in workList" :key="i.id" :title="i.title" :value="i.id" @click="scroll(`#project-${i.id}`)"/>
-                </v-list-group>
-            </v-list>
-        </div>
-        <v-row>
-            <v-col cols="12" md="6">
-                <div :class="isMD ? '' : 'd-flex justify-space-between'" id='school'>
-                    <div>
-                        <h2 class="pb-15">教育程度</h2>
-                        <v-timeline dot-color="main" size="small" side="end" :direction="isSM ? 'horizontal': 'vertical'">
-                            <v-timeline-item v-for="item in school" :key="item.id">
-                                <strong class="me-4">{{item.date}}</strong>
-                                <div class="d-flex">
-                                    <v-chip>{{ item.type }}</v-chip>
-                                    <b class="text-h6 text-main font-weight-bold mx-2">{{item.name}} - {{item.department}}</b>
-                                    <v-chip>{{ item.graduate ? '畢業' : '肄業' }}</v-chip>
-                                </div>
-                            </v-timeline-item>
-                        </v-timeline>
+    <div>
+        <div :class="(menu == '' ? 'menu' : 'float-menu') + ' d-flex flex-column justify-space-between'">
+            <div v-if="menu == 'project'">
+                <div class="d-flex mt-15">
+                    <v-btn variant="text" icon="mdi-chevron-left" @click="changeMenu('expertise')"/>
+                    <h3 class="mt-2">專案經歷</h3>
+                </div>
+                <v-divider class="my-3"/>
+                <v-btn v-for="i in workList" :key="i.id" variant="text" @click="showContent = i.id">{{ i.title }}</v-btn>
+            </div>
+            <div v-else/>
+            <div v-if="menu != 'project'">
+                <h3 class="mt-2">Front-End Developer</h3>
+                <v-divider class="my-12"/>
+                <div>
+                    <span v-if="menu == ''">
+                        　私立亞東技術學院資訊管理系 大學畢業 <v-chip>2017/9～2021/6</v-chip>
+                        <br><br>
+                    </span>
+                    　擁有 2 年 11 個月的網頁開發經驗，主要負責網站的開發與維護，使用語言為Vue。
+                    <br><br>
+                    　具多人協作之經驗，與後端、PM、設計師等討論如何修改與優化專案，以好維護、優質的使用者體驗做為開發首要目標。
+                    <br><br>
+                    <div class="nav">
+                        <button @click="changeMenu('expertise')">
+                            <v-icon>mdi-desktop-tower-monitor</v-icon><br>
+                            電腦專長
+                        </button>
+                        <button @click="changeMenu('work')">
+                            <v-icon>mdi-briefcase</v-icon><br>
+                            ⼯作經驗
+                        </button>
+                        <button @click="changeMenu('project')">
+                            <v-icon>mdi-folder-network</v-icon><br>
+                            專案經歷
+                        </button>
+                        <div class="animation"/>
+                        <div class="animation-shadow"/>
                     </div>
                 </div>
-            </v-col>
-            <v-col cols="12" md="6">
-                <div id="expertise">
-                    <h2 class="pb-15">電腦專長</h2>
+            </div>
+            <v-btn variant="text" icon="mdi-cog" @click="settingModal = true"/>
+        </div>
+        <div v-if="menu" class="content">
+            <div v-if="showContent == 'expertise'">
+                <h2 class="pb-5">電腦專長</h2>
+                <div class="d-flex flex-column justify-space-between">
                     <v-row>
-                        <v-col cols="6" md="12" v-for="item in expertise" :key="item.id">
+                        <v-col cols="6" md="4" v-for="item in expertise" :key="item.id">
                             <p class="m-0 mt-4">{{item.name}}</p>
                             <div class="d-flex flex-wrap">
                                 <div class="m-1" v-for="items in item.list" :key="items.id">
@@ -47,18 +57,9 @@
                         </v-col>
                     </v-row>
                 </div>
-            </v-col>
-            <v-col cols="12">
-                <div class="text-center my-10">
-                    <v-btn icon="mdi-chevron-down" @click="scroll('#work')" elevation="0" class="next" size="x-large"/>
-                </div>
-            </v-col>
-        </v-row>
-        <div>
-        </div>
-        <div class="hv-100" id="work">
-            <div class="py-10">
-                <h2 class="pb-15">⼯作經驗</h2>
+            </div>
+            <div v-if="showContent == 'work'" class="hv-100">
+                <h2 class="pb-5">⼯作經驗</h2>
                 <v-timeline direction="horizontal" dot-color="main" size="small">
                     <v-timeline-item v-for="item in work" :key="item.id">
                         <template v-slot:opposite>
@@ -71,78 +72,90 @@
                     </v-timeline-item>
                 </v-timeline>
             </div>
-            <div class="text-center my-10">
-                <v-btn icon="mdi-chevron-down" @click="scroll('#project')" elevation="0" class="next" size="x-large"/>
-            </div>
-        </div>
-
-        <h2 class="pb-15" id="project">工作專案經歷</h2>
-        各專案小功能：<br>
-        <v-chip class="mx-1" v-for="chip in ['語系', '更新資料倒數', '隱碼', '登入與自動登出']" :key="chip">
-            {{chip}}
-        </v-chip><br>
-        <div v-for="(project, i) in data" :key="project.title" :id="`project-${project.id}`">
-            <div class="text-center mt-10" v-if="i != 0 && i != data.length">
-                <v-btn icon="mdi-chevron-down" @click="scroll(`#project-${project.id}`)" elevation="0" class="next" size="x-large"/>
-            </div>
-            <div class="h-100 d-flex align-center">
-                <div class="w-100 mt-5">
-                    <h3>{{project.title}}</h3>
-                    <div class="py-3">
-                        專案功能：<br>
-                        <span class="pl-8">{{project.content}}</span><br>
-                    </div>
-                    <v-chip class="mx-1" v-for="chip in project.chips" :key="chip">
-                        {{chip}}
-                    </v-chip>
-                    <div v-if="project.images" class="pt-5">
-                        <v-carousel cycle height="500" show-arrows="hover">
-                            <v-carousel-item v-for="img in project.images" :key="img">
-                                <v-img contain eager :src="`assets/image/project/${project.id}/${img}.png`" :alt="`${project.title}-${img}`"/>
-                            </v-carousel-item>
-                        </v-carousel>
-                    </div>
-                    <div v-else style="height: 500px; background: #e7e7e7;" class="mt-5 text-center">
-                        {{ $vuetify.theme.global.name == 'dark' ? 'text-grey' : 'text-white' }}
-                        <h1 :style="{'padding-top': '221px', 'color': $vuetify.theme.global.name == 'dark' ? '#6e6e6e' : '#FFF'}">尚無相關 UI / UX</h1>
+            <div v-if="menu == 'project'" class="mt-n8">
+                <div :key="showProject.title" :id="`project-${showProject.id}`">
+                    <div class="h-100 d-flex align-center">
+                        <div class="w-100 mt-5">
+                            <div class="d-flex">
+                                <h3 class="mr-5">{{showProject.title}}</h3>
+                                <v-menu open-on-hover v-if="showProject.chips.length">
+                                    <template #activator="{ props }">
+                                        <v-btn color="main" v-bind="props">
+                                            包含功能
+                                        </v-btn>
+                                    </template>
+                                    <v-card max-width="500" rounded="xl" class="pa-3">
+                                        <v-chip class="mx-1 my-2" v-for="chip in ['語系', '更新資料倒數', '隱碼', '登入與自動登出'].concat(showProject.chips)" :key="chip">
+                                            {{chip}}
+                                        </v-chip>
+                                    </v-card>
+                                </v-menu>
+                            </div>
+                            <div class="py-3">
+                                專案功能：<br>
+                                <span class="pl-8">{{showProject.content}}</span><br>
+                            </div>
+                            <div v-if="showProject.images" class="pt-5">
+                                <v-carousel cycle height="450" show-arrows="hover">
+                                    <v-carousel-item v-for="img in showProject.images" :key="img">
+                                        <v-img contain eager :src="`src/assets/image/project/${showProject.id}/${img}.png`" :alt="`${showProject.title}-${img}`"/>
+                                    </v-carousel-item>
+                                </v-carousel>
+                            </div>
+                            <div v-else style="height: 500px; background: #e7e7e7;" class="mt-5 text-center">
+                                {{ $vuetify.theme.global.name == 'dark' ? 'text-grey' : 'text-white' }}
+                                <h1 :style="{'padding-top': '221px', 'color': $vuetify.theme.global.name == 'dark' ? '#6e6e6e' : '#FFF'}">尚無相關 UI / UX</h1>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <popup v-model="settingModal" width="700">
+            <setting/>
+        </popup>
     </div>
 </template>
 
 <script>
 import { useDisplay } from 'vuetify'
+import popup from '../components/custom-popup.vue'
+import setting from '../components/setting.vue'
+import _ from 'lodash'
 
 export default {
     setup() {
 		const { mdAndDown, smAndDown } = useDisplay()
 		return { isMD: mdAndDown, isSM: smAndDown  }
 	},
+    components: { popup, setting },
     data() {
         return {
+            menu: '',
+            showContent: 'expertise',
+            showProject: {},
+            settingModal: false,
             data: [
                 {
                     id: 1,
                     title: '101後臺管理系統',
-                    content: '大改前端介面與新增頁面',
-                    chips: ['設定充電車格', '報表', '其他費用（額外收入）', '會員名單', '悠遊卡人工加值', '路邊停車繳費', '交易紀錄', '監控畫面'],
+                    content: '大改前端介面與新增頁面（設定充電車格、報表、其他費用（額外收入）、會員名單、悠遊卡人工加值、路邊停車繳費、交易紀錄、監控畫面）',
+                    chips: [],
                     images: ['main', '1-1', '3-1', '5-1', '5-2', '5-3', '5-4', '6-1', '6-2', '7-1', '7-2', '7-3', '8-1']
                 },
                 {
                     id: 2,
                     title: '停車場後臺管理系統',
-                    content: '新增功能與介面',
-                    chips: ['充電管理介面'],
+                    content: '新增充電管理介面與功能',
+                    chips: [],
                     images: ['01', '02', '03']
 
                 },
                 {
                     id: 3,
                     title: '商家操作系統',
-                    content: '大改前端介面與新增功能',
-                    chips: ['介面優化', '即時折扣調整'],
+                    content: '大改前端介面與新增功能（即時折扣調整）',
+                    chips: [],
                     images: ['1-2', '1-3']
                 },
                 {
@@ -154,7 +167,7 @@ export default {
                 {
                     id: 5,
                     title: '人工辨識操作端與管理端',
-                    content: '（操作端）車辨系統失誤時的後續人工判斷與修正。（管理端）對員工的帳號、中心、token等管理。',
+                    content: '（操作端）車辨系統失誤時的後續人工判斷與修正。\n（管理端）對員工的帳號、中心、token等管理。',
                     chips: ['token管理', '工作流程管理', '中心管理', '使用者管理', '人工調整車牌號碼、判斷']
                 },
                 {
@@ -231,27 +244,7 @@ export default {
                 //     description: '調製飲料、服務顧客。'
                 // }
             ],
-            school:  [
-                {
-                    name: '樹⼈家商',
-                    type: '⾼職',
-                    department: '資料處理科',
-                    date: '2015/9～2017/6',
-                    graduate: true
-                },
-                {
-                    name: '亞東技術學院',
-                    type: '⼤學',
-                    department: '資訊管理系',
-                    date: '2017/9～2021/6',
-                    graduate: true
-                }
-            ],
             expertise: [
-                {
-                    name: '辦公室應用',
-                    list: [ 'Word', 'Excel', 'PowerPoint' ]
-                },
                 {
                     name: '程式設計',
                     list: [ 'Python' ]
@@ -299,35 +292,239 @@ export default {
             ]
         }
     },
+    watch: {
+        showContent() {
+            this.searchProject()
+        }
+    },
     computed: {
         workList() {
             return this.data.map((i) => {return {id: i.id, title: i.title}})
-        }
+        },
+		showDark() {
+			this.$vuetify.theme.global.name == 'dark'
+		},
+    },
+    created() {
+        setTimeout(() => {
+            document.querySelector('.menu').style.top = '0'
+        })
     },
     methods: {
-        scroll(hash) {
-            document.querySelector(hash).scrollIntoView()
+        changeMenu(name) {
+            if (document.querySelector('.menu')) {
+                document.querySelector('.menu').style.transform = 'translateX(calc(-100% + 400px))'
+                document.querySelector('.menu').style.transition = 'all .7s ease 0s'
+                document.querySelector('.menu').style['z-index'] = 1
+            }
+            
+            this.menu = name
+            if (name == 'project') {
+                this.showContent = 1
+                this.searchProject()
+            } else {
+                this.showContent = name
+            }
+        },
+        searchProject() {
+            this.showProject = _.find(this.data, ['id', this.showContent])
         }
     }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+* {
+    font-family: '微軟正黑體';
+    white-space: pre-wrap;
+}
+
+// 隱藏滾動條
+//Chorme
+:global(body::-webkit-scrollbar) {
+    display: none !important;
+}
+//IE/Edge
+body {
+    -ms-overflow-style: none;
+}
+//Firefox
+:global(html) {
+    overflow: -moz-hidden-unscrollable; /*注意！若只打 hidden，chrome 的其它 hidden 會出問題*/
+    height: 100%;
+}
+
+:global(body) {
+	height: 100%;
+	width: calc(100vw + 18px); /*瀏覽器滾動條的長度大約是 18px*/
+	overflow: auto;
+}
+
 .next .mdi-chevron-down {
     font-size: 50px;
 }
+
 .hv-100 {
     height: 100vh;
 }
-
-.float-menu {
+.menu, .float-menu {
+    background: rgb(var(--v-theme-main));
+    height: 100vh;
     position: fixed;
-    right: 0;
-    top: 64px;
-    z-index: 1;
+    left: 0;
 }
 
-#work {
-    white-space: pre-wrap;
+.menu {
+    width: 100vw;
+    top: -100vw;
+    padding: 10%;
+    z-index: 1007;
+    transition: all .7s ease 0s;
+
+    .nav {
+        height: 200px;
+
+        .animation, .animation-shadow {
+            /* 菱形效果 */
+            display: inline-block;
+            transform: rotate(-65deg);
+            overflow: hidden;
+        }
+
+        button {
+            line-height: 3;
+            font-size: 18px;
+
+            &:nth-child(1), &:nth-child(2), &:nth-child(3) {
+                &.active ~ .animation, &.active ~ .animation-shadow, &:hover ~ .animation-shadow {
+                    height: 250px;
+                    top: -30px;
+                }
+            }
+
+            &:nth-child(1) {
+                &.active ~ .animation, &.active ~ .animation-shadow, &:hover ~ .animation-shadow {
+                    width: calc(100% / 3 - 40px);
+                    left: 20px;
+                }
+            }
+
+            &:nth-child(2) {
+                    &.active ~ .animation, &.active ~ .animation-shadow, &:hover ~ .animation-shadow {
+                    width: calc(100% / 3 - 40px);
+                    left: calc(100% / 3 + 25px);
+                }
+            }
+
+            &:nth-child(3) {
+                &.active ~ .animation, &.active ~ .animation-shadow, &:hover ~ .animation-shadow {
+                    width: calc(100% / 3 - 40px);
+                    left: calc(100% / 3 * 2 + 30px);
+                }
+            }
+        }
+    }
+}
+
+.float-menu {
+    width: 400px;
+    top: 64px;
+    padding: 36px;
+
+    .v-btn.v-btn--variant-outlined {
+        width: 100px;
+        height: 100px;
+
+        i {
+            font-size: 35px;
+        }
+    }
+
+    .nav {
+        height: 100px;
+
+        .animation, .animation-shadow {
+            /* 菱形效果 */
+            display: inline-block;
+            overflow: hidden;
+        }
+
+        button {
+            line-height: 2;
+
+            &:nth-child(1), &:nth-child(2), &:nth-child(3) {
+                &.active ~ .animation, &.active ~ .animation-shadow, &:hover ~ .animation-shadow {
+                    width: calc(100% / 3);
+                    top: 0;
+                }
+            }
+    
+            &:nth-child(1) {
+                &.active ~ .animation, &.active ~ .animation-shadow, &:hover ~ .animation-shadow {
+                    left: 0;
+                }
+            }
+
+            &:nth-child(2) {
+                    &.active ~ .animation, &.active ~ .animation-shadow, &:hover ~ .animation-shadow {
+                    left: calc(100% / 3);
+                }
+            }
+
+            &:nth-child(3) {
+                &.active ~ .animation, &.active ~ .animation-shadow, &:hover ~ .animation-shadow {
+                    left: calc(100% / 3 * 2);
+                }
+            }
+        }
+    }
+}
+
+.nav {
+    position: relative;
+    margin: 0;
+    width: 100%;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+
+    button {
+        text-transform: uppercase;
+        width: calc(100% / 3);
+        color: white;
+        text-decoration: none;
+        position: relative;
+        z-index: 1;
+        display: inline-block;
+        text-align: center;
+
+        i {
+            font-size: 35px;
+        }
+    }
+
+    .animation, .animation-shadow {
+        position: absolute;
+        /* 背景跟随 */
+        height: 100px;
+        top: 0;
+        z-index: 0;
+        background: #ffffff;
+        border-radius: 8px;
+        transition: all .7s ease 0s;
+    }
+
+    .animation-shadow {
+        background: rgba(255, 255, 255, 0.4);
+    }
+
+}
+
+.content {
+    position: fixed;
+    right: 0;
+    width: calc(100vw - 400px);
+    padding: 0 36px;
 }
 </style>

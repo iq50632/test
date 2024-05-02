@@ -97,13 +97,13 @@ export default {
     }
 }
 </script>
+
 <style lang="scss" scoped>
 .svg {
     position: fixed;
     left: 0;
     top: 24%;
     transition: path 0.5s;
-
 }
 
 .background {
@@ -135,20 +135,6 @@ export default {
     width: 25%;
 }
 
-.mask {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1;
-}
-
-.enlarge {
-    background: rgb(var(--v-theme-main));
-    height: 100vh;
-    width: 100vw;
-    animation: mask 1s;
-}
-
 @media (max-width: 960px) {
     .svg {
         top: 65%;
@@ -171,7 +157,28 @@ export default {
     }
 }
 
-@keyframes mask {
+.icon-mt-0 .v-input__control .v-input__append-inner, .v-text-field.v-text-field--solo .v-input__append-inner {
+    margin-top: 0 !important;
+}
+
+</style>
+
+<style lang="scss">
+.mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.enlarge {
+    background: rgb(var(--v-theme-main));
+    height: 100vh;
+    width: 100vw;
+    animation: circle-mask 1s;
+}
+
+@keyframes circle-mask {
     0% {
         clip-path: circle(0 at center center);
     }
@@ -179,9 +186,4 @@ export default {
         clip-path: circle(100vw at center center);
     }
 }
-
-.icon-mt-0 .v-input__control .v-input__append-inner, .v-text-field.v-text-field--solo .v-input__append-inner {
-    margin-top: 0 !important;
-}
-
 </style>

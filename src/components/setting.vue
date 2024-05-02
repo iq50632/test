@@ -12,12 +12,12 @@
         </v-col>
     </v-row>
     <v-row>
-        <v-col v-for="title in ['主題模式', '換頁標籤']" :key="title" cols="6" lg="4" xl="2">
+        <v-col v-for="title in ['主題模式', '換頁標籤']" :key="title" cols="6" class="text-center">
             <h2>{{title}}</h2>
         </v-col>
     </v-row>
     <v-row>
-        <v-col cols="3" lg="2" xl="1">
+        <v-col cols="3">
             <v-btn :color="!isDark ? 'main' : ''" height="100" width="100" @click="toggleTheme">
                 <div>
                     <v-icon style="font-size: 35px;">mdi-weather-sunny</v-icon>
@@ -25,7 +25,7 @@
                 </div>
             </v-btn>
         </v-col>
-        <v-col cols="3" lg="2" xl="1">
+        <v-col cols="3">
             <v-btn :color="isDark ? 'main' : ''" height="100" width="100" @click="toggleTheme">
                 <div>
                     <v-icon style="font-size: 35px;">mdi-weather-night</v-icon>
@@ -33,12 +33,12 @@
                 </div>
             </v-btn>
         </v-col>
-        <v-col cols="3" lg="2" xl="1">
+        <v-col cols="3">
             <v-btn :color="!isSidebar ? 'main' : ''" height="100" width="100" @click="setSidebar">
                 導航欄
             </v-btn>
         </v-col>
-        <v-col cols="3" lg="2" xl="1">
+        <v-col cols="3">
             <v-btn :color="isSidebar ? 'main' : ''" height="100" width="100" @click="setSidebar">
                 側邊攔
             </v-btn>

@@ -12,7 +12,7 @@
 		</v-tabs>
 		<div class="ml-auto">
 			<v-btn :dark="showDark" @click="$router.push({name: 'login'})">登入</v-btn>
-			<v-btn :dark="showDark" icon="mdi-cog" @click="$router.push({name: 'setting'})"/>
+			<v-btn :dark="showDark" icon="mdi-cog" @click="settingModal = true"/>
 		</div>
 	</v-app-bar>
     <v-navigation-drawer v-model="showSidebar" temporary>
@@ -38,12 +38,9 @@
 			<v-btn :color="store.snackbar.color" icon="mdi-close" v-bind="attrs" @click="store.snackbar.show = false"/>
 		</template>
 	</v-snackbar>
-	<!-- <v-footer color="main" class="text-center d-flex flex-column pa-0" app v-if="this.$route.name != 'login'">
-		<div>
-			<v-btn v-for="icon in icons" :key="icon" class="mx-4" :icon="icon" variant="text"/>
-		</div>
-		2023 — Vuetify
-	</v-footer> -->
+	<popup v-model="settingModal" width="700">
+		<setting/>
+	</popup>
 </v-app>
 </template>
 
@@ -51,6 +48,8 @@
 import { RouterView } from 'vue-router'
 import { useDefaultStore } from './stores/default'
 import { useDisplay } from 'vuetify'
+import popup from './components/custom-popup.vue'
+import setting from './components/setting.vue'
 
 export default {
     setup() {
@@ -58,6 +57,7 @@ export default {
 		const { mdAndDown, smAndUp } = useDisplay()
 		return { store, mdAndDown, smAndUp }
 	},
+    components: { popup, setting },
     data() {
         return {
 			icons: [
@@ -68,13 +68,14 @@ export default {
 			],
             router: '',
 			showSidebar: false,
-			transitionName: ''
+			transitionName: '',
+			settingModal: false
 		}
 	},
 	created() {
 		const theme = window.sessionStorage.getItem('theme') || 'light'
 		const color = window.sessionStorage.getItem('color') || 'light-blue'
-		const isSidebar = window.sessionStorage.getItem('isSidebar') || false
+		const isSidebar = window.sessionStorage.getItem('isSidebar') || true
 		
 		this.$vuetify.theme.global.name = theme
 		this.$vuetify.theme.themes.dark.colors.main = this.$vuetify.theme.themes.dark.colors[color]
@@ -87,12 +88,10 @@ export default {
 	},
 	watch:{
 		'$route' (to, from) {
-			const routes = ['home', 'HRManagement', 'shopping', 'chat', 'product', 'setting', 'login', 'map', 'parkingSeats']
+			const routes = ['home', 'shopDataTable', 'Note', 'shopping', 'travel']
 			const toDepth = routes.indexOf(to.name)
 			const fromDepth = routes.indexOf(from.name)
-			if (to.name == 'login' || from.name == 'login') {
-				this.transitionName = 'mask'
-			} else if (from.name == 'product') {
+			if (to.name == 'login' || from.name == 'login' || from.name == 'product' || to.name == 'home' || from.name == 'home') {
 				this.transitionName = 'mask'
 			} else {
 				this.transitionName = `slide-fade-${toDepth > fromDepth ? 'left' : 'right'}`
@@ -162,7 +161,9 @@ export default {
     width: 100%;
     height: 100%;
 }
+</style>
 
+<style lang="scss">
 /* - - - - - - - - - - - - - - - - - - transitions - - - - - - - - - - - - - - - - - - */
 	
 .slide-fade {
